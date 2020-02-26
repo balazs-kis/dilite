@@ -19,13 +19,13 @@ namespace DiLite.Registrations
 
         public override object Activate(IContainer container)
         {
-            var ctor = _registeredType.GetConstructors().SingleOrDefault(c => c.IsPublic);
-            if (ctor == null)
+            var publicConstructors = _registeredType.GetConstructors().Where(c => c.IsPublic).ToArray();
+            if (publicConstructors.Length != 1)
             {
                 throw new ConstructorException(_registeredType);
             }
 
-            return ActivateConstructorWithContainer(ctor, container);
+            return ActivateConstructorWithContainer(publicConstructors.Single(), container);
         }
 
         private static object ActivateConstructorWithContainer(ConstructorInfo constructorInfo, IContainer container) =>

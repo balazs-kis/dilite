@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiLite", "DiLite\DiLite.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiLite.Tests", "DiLite.Tests\DiLite.Tests.csproj", "{FE57A1D1-A6AC-44AD-8464-16F5BBAC32CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2DE1BDA7-FCB2-4A59-A217-B30775242047}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		logo.png = logo.png
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

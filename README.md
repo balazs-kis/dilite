@@ -56,8 +56,8 @@ Factory methods can also be registered as `Func<IContainer, T>`:
 ```csharp
 containerBuilder.RegisterFactoryMethod(container =>
 {
-    var dep1 = context.Resolve<IDependency1>();
-    var dep2 = context.Resolve<IDependency2>();
+    var dep1 = container.Resolve<IDependency1>();
+    var dep2 = container.Resolve<IDependency2>();
     return new MyClass(dep1, dep2);
 }).As<IMyClass>();
 ```

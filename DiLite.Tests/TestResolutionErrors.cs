@@ -57,5 +57,29 @@ namespace DiLite.Tests
             Assert.IsInstanceOfType(resultException.InnerException, typeof(NotRegisteredException));
             Assert.IsTrue(resultException.InnerException.Message.Contains(typeof(IInternalDependency3).FullName));
         }
+
+        [TestMethod]
+        public void TestRegistrationWithMultiplePublicConstructors()
+        {
+            Exception resultException = null;
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>();
+            containerBuilder.RegisterType<InternalDependency2>().As<IInternalDependency2>();
+            containerBuilder.RegisterType<ClassWithMultiplePublicConstructors>();
+            var container = containerBuilder.Build();
+
+            try
+            {
+                container.Resolve<ClassWithMultiplePublicConstructors>();
+            }
+            catch (Exception ex)
+            {
+                resultException = ex;
+            }
+
+            Assert.IsNotNull(resultException);
+            Assert.IsInstanceOfType(resultException, typeof(ConstructorException));
+            Assert.IsTrue(resultException.Message.Contains(typeof(ClassWithMultiplePublicConstructors).FullName));
+        }
     }
 }
