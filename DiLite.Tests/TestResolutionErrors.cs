@@ -11,7 +11,7 @@ namespace DiLite.Tests
     public class TestResolutionErrors
     {
         [TestMethod]
-        public void TestNotRegisteredResolution()
+        public void ResolveNotRegisteredAlias_ResolveThrowsException()
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>();
@@ -27,12 +27,15 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(NotRegisteredException));
+            Assert.IsNotNull(resultException,
+                "Resolution should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(NotRegisteredException),
+                "The specified kind of exception should be thrown");
         }
 
         [TestMethod]
-        public void TestDependencyNotRegisteredResolution()
+        public void ResolveClassWithNotRegisteredDependency_ResolveThrowsException()
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<Dependency1>().As<IDependency1>().AsSelf();
@@ -51,15 +54,24 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(DependencyResolutionException));
-            Assert.IsNotNull(resultException.InnerException);
-            Assert.IsInstanceOfType(resultException.InnerException, typeof(NotRegisteredException));
-            Assert.IsTrue(resultException.InnerException.Message.Contains(typeof(IInternalDependency3).FullName));
+            Assert.IsNotNull(resultException,
+                "Resolution should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(DependencyResolutionException),
+                "The specified kind of exception should be thrown");
+
+            Assert.IsNotNull(resultException.InnerException,
+                "The thrown exception should contain an InnerException");
+
+            Assert.IsInstanceOfType(resultException.InnerException, typeof(NotRegisteredException),
+                "The InnerException should be of the specified kind");
+
+            Assert.IsTrue(resultException.InnerException.Message.Contains(typeof(IInternalDependency3).FullName),
+                "The message of the InnerException should contain the name of the missing dependency");
         }
 
         [TestMethod]
-        public void TestRegistrationWithMultiplePublicConstructors()
+        public void ResolveClassWithMultiplePublicConstructors_ResolveThrowsException()
         {
             Exception resultException = null;
             var containerBuilder = new ContainerBuilder();
@@ -77,9 +89,14 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(ConstructorException));
-            Assert.IsTrue(resultException.Message.Contains(typeof(ClassWithMultiplePublicConstructors).FullName));
+            Assert.IsNotNull(resultException,
+                "Resolution should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(ConstructorException),
+                "The specified kind of exception should be thrown");
+
+            Assert.IsTrue(resultException.Message.Contains(typeof(ClassWithMultiplePublicConstructors).FullName),
+                "The message of the exception should contain the name of the type with multiple public constructors");
         }
     }
 }

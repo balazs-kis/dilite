@@ -46,7 +46,7 @@ Multiple registrations can be made for the same *alias*:
 containerBuilder.RegisterType<MyClassImplementation1>().As<IMyClass>();
 containerBuilder.RegisterType<MyClassImplementation2>().As<IMyClass>();
 ```
-In this case, the `Resolve` method will return an instance of `MyClassImplementation2` because it was the last one registered for that alias. By using the `ResolveAll` method, all registrations for the alias will be returned:
+In this case, the `Resolve` method will return an instance of `MyClassImplementation2` because it was the last one registered for that *alias*. By using the `ResolveAll` method, all registrations for the *alias* will be returned:
 ```csharp
 IEnumerable<IMyClass> myInstances = container.ResolveAll<IMyClass>();
 ```

@@ -11,7 +11,7 @@ namespace DiLite.Tests
     public class TestRegistrationErrors
     {
         [TestMethod]
-        public void TestBadSelfRegistration()
+        public void BadSelfRegistration_RegisterTypeThrowsException()
         {
             Exception resultException = null;
             var containerBuilder = new ContainerBuilder();
@@ -25,12 +25,15 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException));
+            Assert.IsNotNull(resultException,
+                "Registration should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
+                "The specified kind of exception should be thrown");
         }
 
         [TestMethod]
-        public void TestBadInterfaceRegistration()
+        public void BadInterfaceRegistration_RegisterTypeThrowsException()
         {
             Exception resultException = null;
             var containerBuilder = new ContainerBuilder();
@@ -44,12 +47,15 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException));
+            Assert.IsNotNull(resultException,
+                "Registration should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
+                "The specified kind of exception should be thrown");
         }
 
         [TestMethod]
-        public void TestInterfaceAsInstanceRegistration()
+        public void InterfaceAsInstanceRegistration_RegisterTypeThrowsException()
         {
             Exception resultException = null;
             var containerBuilder = new ContainerBuilder();
@@ -63,12 +69,15 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException));
+            Assert.IsNotNull(resultException,
+                "Registration should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException),
+                "The specified kind of exception should be thrown");
         }
 
         [TestMethod]
-        public void TestAbstractClassAsInstanceRegistration()
+        public void AbstractClassAsInstanceRegistration_RegisterTypeThrowsException()
         {
             Exception resultException = null;
             var containerBuilder = new ContainerBuilder();
@@ -82,8 +91,11 @@ namespace DiLite.Tests
                 resultException = ex;
             }
 
-            Assert.IsNotNull(resultException);
-            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException));
+            Assert.IsNotNull(resultException,
+                "Registration should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException),
+                "The specified kind of exception should be thrown");
         }
     }
 }
