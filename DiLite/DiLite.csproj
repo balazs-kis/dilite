@@ -2,6 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>balazs.kis</Authors>
+    <Description>DiLite /dɪˈlʌɪt/ is a minimalist, lightweight DI framework. Registrations and resolutions will look very familiar to those accustomed to Autofac.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/balazs-kis/dilite</PackageProjectUrl>
+    <PackageIcon>logo-square.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/balazs-kis/dilite</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>dependency-injection dependency-injection-container inversion-of-control ioc ioc-container</PackageTags>
+    <PackageId>DiLight</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\logo-square.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
