@@ -34,12 +34,5 @@ namespace DiLite.Builders
         /// </summary>
         /// <returns>The registration builder itself to chain other methods</returns>
         IRegistrationBuilder AsSingleInstance();
-
-        /// <summary>
-        /// Builds the <see cref="IRegistration"/> instance.
-        /// This method is called by the <seealso cref="IContainerBuilder"/>.
-        /// </summary>
-        /// <returns>The <see cref="IRegistration"/> instance</returns>
-        IRegistration Build();
     }
 }

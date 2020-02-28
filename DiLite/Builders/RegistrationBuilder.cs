@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DiLite.Builders
 {
-    internal class RegistrationBuilder : BuilderBase<IRegistration>, IRegistrationBuilder
+    internal class RegistrationBuilder : BuilderBase<Registration>, IRegistrationBuilder
     {
         private enum RegistrationCategory { Type, FactoryMethod }
 
@@ -73,7 +73,7 @@ namespace DiLite.Builders
             return this;
         }
 
-        protected override IRegistration BuildInternal()
+        protected override Registration BuildInternal()
         {
             if (!_registeredAliases.Any())
             {
@@ -83,13 +83,21 @@ namespace DiLite.Builders
             switch (_category)
             {
                 case RegistrationCategory.Type:
-                    return new TypeRegistration(_registeredType, _registeredAliases, _isSingleInstance);
+                    return new TypeRegistration(
+                        _registeredType,
+                        _registeredAliases,
+                        _isSingleInstance);
 
                 case RegistrationCategory.FactoryMethod:
-                    return new FactoryMethodRegistration(_registeredFactoryMethod, _registeredAliases, _isSingleInstance);
+                    return new FactoryMethodRegistration(
+                        _registeredFactoryMethod,
+                        _registeredType,
+                        _registeredAliases,
+                        _isSingleInstance);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_category), $"Unknown registration category {_category}");
+                    throw new ArgumentOutOfRangeException(
+                        nameof(_category), $"Unknown registration category {_category}");
             }
         }
 

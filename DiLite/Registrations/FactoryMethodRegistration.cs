@@ -1,5 +1,4 @@
-﻿using DiLite.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DiLite.Registrations
@@ -8,22 +7,19 @@ namespace DiLite.Registrations
     {
         private readonly Func<IContainer, object> _registeredFactoryMethod;
 
-        public FactoryMethodRegistration(Func<IContainer, object> registeredFactoryMethod, IEnumerable<Type> aliases, bool isSingleInstance)
-            : base(aliases, isSingleInstance)
+        public FactoryMethodRegistration(
+            Func<IContainer, object> registeredFactoryMethod,
+            Type createdType,
+            IEnumerable<Type> aliases,
+            bool isSingleInstance)
+            : base(
+                createdType,
+                aliases,
+                isSingleInstance)
         {
             _registeredFactoryMethod = registeredFactoryMethod;
         }
 
-        public override object Activate(IContainer container)
-        {
-            try
-            {
-                return _registeredFactoryMethod(container);
-            }
-            catch (Exception ex)
-            {
-                throw new InstanceCreationFailedException(ex);
-            }
-        }
+        public override RegisteredEntity RegisteredEntity => new RegisteredFactoryMethod(RegisteredType, _registeredFactoryMethod, IsSingleInstance);
     }
 }

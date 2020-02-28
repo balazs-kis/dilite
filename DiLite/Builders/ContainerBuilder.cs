@@ -6,12 +6,12 @@ namespace DiLite.Builders
 {
     public class ContainerBuilder : BuilderBase<IContainer>, IContainerBuilder
     {
-        private readonly List<IRegistrationBuilder> _registrationBuilders;
+        private readonly List<RegistrationBuilder> _registrationBuilders;
 
 
         public ContainerBuilder()
         {
-            _registrationBuilders = new List<IRegistrationBuilder>();
+            _registrationBuilders = new List<RegistrationBuilder>();
         }
 
 

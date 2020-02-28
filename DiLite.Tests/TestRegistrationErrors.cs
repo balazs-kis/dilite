@@ -4,6 +4,7 @@ using DiLite.Tests.Classes;
 using DiLite.Tests.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace DiLite.Tests
 {

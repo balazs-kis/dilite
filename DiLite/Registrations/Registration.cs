@@ -4,17 +4,19 @@ using System.Linq;
 
 namespace DiLite.Registrations
 {
-    internal abstract class Registration : IRegistration
+    internal abstract class Registration
     {
-        public IReadOnlyList<Type> Aliases { get; }
-        public bool IsSingleInstance { get; }
+        protected readonly Type RegisteredType;
+        protected readonly bool IsSingleInstance;
 
-        protected Registration(IEnumerable<Type> aliases, bool isSingleInstance)
+        public IReadOnlyList<Type> Aliases { get; }
+        public abstract RegisteredEntity RegisteredEntity { get; }
+
+        protected Registration(Type registeredType, IEnumerable<Type> aliases, bool isSingleInstance)
         {
+            RegisteredType = registeredType;
             Aliases = aliases.ToList();
             IsSingleInstance = isSingleInstance;
         }
-
-        public abstract object Activate(IContainer container);
     }
 }

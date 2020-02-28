@@ -251,6 +251,31 @@ namespace DiLite.Tests
                 "The value should be set on the single instance");
         }
 
+        [TestMethod]
+        public void SameTypeRegisterWithSameAliasTwiceInOneStep_OnlyOneIsKeptAndResolved()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>().As<IInternalDependency1>();
+            var container = containerBuilder.Build();
+
+            var res = container.ResolveAll<IInternalDependency1>().ToList();
+
+            Assert.AreEqual(1, res.Count, "The same registration should not be resolved as different instances");
+        }
+
+        [TestMethod]
+        public void SameTypeRegisterWithSameAliasTwiceInDifferentSteps_OnlyOneIsKeptAndResolved()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>();
+            containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>();
+            var container = containerBuilder.Build();
+
+            var res = container.ResolveAll<IInternalDependency1>().ToList();
+
+            Assert.AreEqual(1, res.Count, "The same registration should not be resolved as different instances");
+        }
+
 
         private void RegisterAllDependenciesAsInterface(IContainerBuilder containerBuilder)
         {

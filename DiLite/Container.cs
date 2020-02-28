@@ -8,26 +8,28 @@ namespace DiLite
 {
     public class Container : IContainer
     {
-        private readonly Dictionary<Type, List<IRegistration>> _registrationsByType;
-        private readonly Dictionary<IRegistration, object> _singleInstances;
+        private readonly Dictionary<Type, List<RegisteredEntity>> _registrationsByType;
+        private readonly Dictionary<RegisteredEntity, object> _singleInstances;
 
 
-        public Container(IEnumerable<IRegistration> registrations)
+        internal Container(IEnumerable<Registration> registrations)
         {
-            _singleInstances = new Dictionary<IRegistration, object>();
-            _registrationsByType = new Dictionary<Type, List<IRegistration>>();
+            _singleInstances = new Dictionary<RegisteredEntity, object>();
+            _registrationsByType = new Dictionary<Type, List<RegisteredEntity>>();
 
             foreach (var registration in registrations)
             {
+                var registeredEntity = registration.RegisteredEntity;
                 foreach (var alias in registration.Aliases)
                 {
-                    if (_registrationsByType.ContainsKey(alias))
+                    if (_registrationsByType.ContainsKey(alias) &&
+                        !_registrationsByType[alias].Contains(registeredEntity))
                     {
-                        _registrationsByType[alias].Add(registration);
+                        _registrationsByType[alias].Add(registeredEntity);
                     }
                     else
                     {
-                        _registrationsByType[alias] = new List<IRegistration> { registration };
+                        _registrationsByType[alias] = new List<RegisteredEntity> { registeredEntity };
                     }
                 }
             }
@@ -77,20 +79,20 @@ namespace DiLite
         }
 
 
-        private object GetOrCreateInstance(IRegistration registration)
+        private object GetOrCreateInstance(RegisteredEntity registeredEntity)
         {
-            if (!registration.IsSingleInstance)
+            if (!registeredEntity.IsSingleInstance)
             {
-                return registration.Activate(this);
+                return registeredEntity.Activate(this);
             }
 
-            if (_singleInstances.ContainsKey(registration))
+            if (_singleInstances.ContainsKey(registeredEntity))
             {
-                return _singleInstances[registration];
+                return _singleInstances[registeredEntity];
             }
 
-            var result = registration.Activate(this);
-            _singleInstances[registration] = result;
+            var result = registeredEntity.Activate(this);
+            _singleInstances[registeredEntity] = result;
 
             return result;
         }
