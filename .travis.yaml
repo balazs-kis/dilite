@@ -1,0 +1,8 @@
+language: csharp
+mono: none
+dotnet: 3.1.102
+solution: DiLite.sln
+script:
+  - dotnet restore
+  - dotnet build -c Release
+  - dotnet test DiLite.Tests/DiLite.Tests.csproj
