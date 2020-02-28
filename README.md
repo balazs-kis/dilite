@@ -1,7 +1,8 @@
-![DiLite Logo](/logo.png)
+![DiLite](/logo.png)
 
 DiLite /dɪˈlʌɪt/ is a minimalist, lightweight DI framework. Registrations and resolutions will look very familiar to those accustomed to Autofac.
 
+![Build status: unknown](https://travis-ci.org/balazs-kis/dilite.svg?branch=master)
 
 ## Usage
 
