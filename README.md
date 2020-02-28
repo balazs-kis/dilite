@@ -3,6 +3,7 @@
 DiLite /dɪˈlʌɪt/ is a minimalist, lightweight DI framework. Registrations and resolutions will look very familiar to those accustomed to Autofac.
 
 ![Build status: unknown](https://travis-ci.org/balazs-kis/dilite.svg?branch=master)
+![Known Vulnerabilities](https://snyk.io/test/github/balazs-kis/dilite/badge.svg)
 
 ## Usage
 
