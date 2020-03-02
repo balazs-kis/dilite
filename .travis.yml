@@ -7,9 +7,6 @@ script:
   - dotnet restore
   - dotnet build
 
-  # MINICOVER: install tool
-  - dotnet tool install minicover
-
   # MINICOVER: instrument
   - dotnet minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources /DiLite/**/*.cs
 
