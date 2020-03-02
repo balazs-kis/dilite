@@ -9,7 +9,7 @@ script:
   - dotnet build
 
   # MINICOVER: instrument
-  - dotnet minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources ./DiLite/**/*.cs
+  - dotnet minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources /DiLite/**/*.cs
 
   # MINICOVER: reset hits
   - dotnet minicover reset
@@ -21,5 +21,4 @@ script:
   - dotnet minicover uninstrument
 
   # MINICOVER: create coveralls report
-  - dotnet minicover report --threshold 5
   - dotnet minicover coverallsreport --root-path ./ --workdir ./ --service-name "travis-ci" --service-job-id "$TRAVIS_JOB_ID"
