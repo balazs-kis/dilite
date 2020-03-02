@@ -3,6 +3,24 @@ mono: none
 dotnet: 3.1.102
 solution: DiLite.sln
 script:
+  # MINICOVER: install tool
+  - dotnet tool install --global minicover
+
+  # Restore and build
   - dotnet restore
   - dotnet build -c Release
-  - dotnet test DiLite.Tests/DiLite.Tests.csproj
+
+  # MINICOVER: instrument
+  - minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources /DiLite/**/*.cs
+
+  # MINICOVER: reset hits
+  - minicover reset
+
+  # Run the tests
+  - dotnet test --no-build
+
+  # MINICOVER: uninstrument
+  - minicover uninstrument
+
+  # MINICOVER: create coveralls report
+  - minicover coverallsreport --root-path ./ --workdir ./ --service-name "travis-ci" --service-job-id "$TRAVIS_JOB_ID"
