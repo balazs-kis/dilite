@@ -4,7 +4,6 @@ using DiLite.Tests.Classes;
 using DiLite.Tests.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 
 namespace DiLite.Tests
 {
@@ -96,6 +95,32 @@ namespace DiLite.Tests
                 "Registration should throw an exception");
 
             Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException),
+                "The specified kind of exception should be thrown");
+        }
+
+        [TestMethod]
+        public void CallingBuildTwice_BuilderThrowsException()
+        {
+            Exception resultException = null;
+            var containerBuilder = new ContainerBuilder();
+
+            try
+            {
+                containerBuilder.RegisterType<InternalDependency1>().AsSelf();
+                containerBuilder.RegisterType<InternalDependency2>().AsSelf();
+
+                containerBuilder.Build();
+                containerBuilder.Build();
+            }
+            catch (Exception ex)
+            {
+                resultException = ex;
+            }
+
+            Assert.IsNotNull(resultException,
+                "Build should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
                 "The specified kind of exception should be thrown");
         }
     }

@@ -98,5 +98,40 @@ namespace DiLite.Tests
             Assert.IsTrue(resultException.Message.Contains(typeof(ClassWithMultiplePublicConstructors).FullName),
                 "The message of the exception should contain the name of the type with multiple public constructors");
         }
+
+        [TestMethod]
+        public void ResolveFactoryMethodThatThrowsException_ResolveThrowsException()
+        {
+            Exception resultException = null;
+            var factoryMethodException = new DivideByZeroException("This is an error.");
+
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterFactoryMethod<Main1>(context => throw factoryMethodException).As<IMain1>();
+            var container = containerBuilder.Build();
+
+            try
+            {
+                container.Resolve<IMain1>();
+            }
+            catch (Exception ex)
+            {
+                resultException = ex;
+            }
+
+            Assert.IsNotNull(resultException,
+                "Resolution should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(InstanceCreationFailedException),
+                "The specified kind of exception should be thrown");
+
+            Assert.IsNotNull(resultException.InnerException,
+                "The inner exception must not be null");
+
+            Assert.IsInstanceOfType(resultException.InnerException, factoryMethodException.GetType(),
+                "The inner exception must be the same type as the exception thrown by the factory method");
+
+            Assert.AreEqual(resultException.InnerException.Message, factoryMethodException.Message,
+                "The inner exception must contain the message of the exception thrown by the factory method");
+        }
     }
 }
