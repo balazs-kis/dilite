@@ -11,7 +11,12 @@
     <RepositoryUrl>https://github.com/balazs-kis/dilite</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>dependency-injection dependency-injection-container inversion-of-control ioc ioc-container</PackageTags>
-    <PackageId>DiLight</PackageId>
+    <PackageId>di-lite</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE" Pack="true" Visible="false" PackagePath=""/>
+    <None Include="..\logo-square.png" Pack="true" Visible="false" PackagePath=""/>
+  </ItemGroup>
 
 </Project>
