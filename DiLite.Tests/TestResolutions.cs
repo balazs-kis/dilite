@@ -160,7 +160,7 @@ namespace DiLite.Tests
         }
 
         [TestMethod]
-        public void RegisterMultipleClassesForAlias_ResolveAllReturnsSuccessfullyWithOneItem()
+        public void RegisterMultipleClassesForAlias_ResolveAllReturnsSuccessfullyWithMultipleItems()
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<Common1>().As<ICommonInterface>();

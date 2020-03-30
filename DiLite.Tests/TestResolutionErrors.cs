@@ -35,6 +35,30 @@ namespace DiLite.Tests
         }
 
         [TestMethod]
+        public void ResolveNotRegisteredAlias_ResolveAllThrowsException()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<InternalDependency1>().As<IInternalDependency1>();
+            var container = containerBuilder.Build();
+
+            Exception resultException = null;
+            try
+            {
+                container.ResolveAll<IInternalDependency2>();
+            }
+            catch (Exception ex)
+            {
+                resultException = ex;
+            }
+
+            Assert.IsNotNull(resultException,
+                "Resolution should throw an exception");
+
+            Assert.IsInstanceOfType(resultException, typeof(NotRegisteredException),
+                "The specified kind of exception should be thrown");
+        }
+
+        [TestMethod]
         public void ResolveClassWithNotRegisteredDependency_ResolveThrowsException()
         {
             var containerBuilder = new ContainerBuilder();
