@@ -5,6 +5,7 @@ DiLite /dɪˈlʌɪt/ is a minimalist, lightweight DI framework. Registrations an
 [![Build Status](https://travis-ci.org/balazs-kis/dilite.svg?branch=master)](https://travis-ci.org/balazs-kis/dilite)
 [![Coverage Status](https://coveralls.io/repos/github/balazs-kis/dilite/badge.svg?branch=master)](https://coveralls.io/github/balazs-kis/dilite?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e9ed8962ba108183aa1e/maintainability)](https://codeclimate.com/github/balazs-kis/dilite/maintainability)
+[![Nuget](https://img.shields.io/nuget/v/di-lite)](https://www.nuget.org/packages/di-lite)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Usage
