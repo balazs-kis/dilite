@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2DE1BDA7-FCB2-4A59-A217-B30775242047}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+		.config\dotnet-tools.json = .config\dotnet-tools.json
 		LICENSE = LICENSE
 		logo-square.png = logo-square.png
 		logo.png = logo.png
