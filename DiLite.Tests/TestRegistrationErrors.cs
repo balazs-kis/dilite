@@ -4,6 +4,7 @@ using DiLite.Tests.Classes;
 using DiLite.Tests.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using TestLite;
 
 namespace DiLite.Tests
 {
@@ -11,117 +12,40 @@ namespace DiLite.Tests
     public class TestRegistrationErrors
     {
         [TestMethod]
-        public void BadSelfRegistration_RegisterTypeThrowsException()
-        {
-            Exception resultException = null;
-            var containerBuilder = new ContainerBuilder();
-
-            try
-            {
-                containerBuilder.RegisterType<Main1>().As<Main1>();
-            }
-            catch (Exception ex)
-            {
-                resultException = ex;
-            }
-
-            Assert.IsNotNull(resultException,
-                "Registration should throw an exception");
-
-            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
-                "The specified kind of exception should be thrown");
-        }
+        public void BadSelfRegistration_RegisterTypeThrowsException() => Test
+            .Arrange(() => new ContainerBuilder())
+            .Act(containerBuilder => containerBuilder.RegisterType<Main1>().As<Main1>())
+            .Assert().ThrewException<InvalidOperationException>("Bad self-registration should throw an exception");
 
         [TestMethod]
-        public void BadInterfaceRegistration_RegisterTypeThrowsException()
-        {
-            Exception resultException = null;
-            var containerBuilder = new ContainerBuilder();
-
-            try
-            {
-                containerBuilder.RegisterType<Main1>().As<IMain2>();
-            }
-            catch (Exception ex)
-            {
-                resultException = ex;
-            }
-
-            Assert.IsNotNull(resultException,
-                "Registration should throw an exception");
-
-            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
-                "The specified kind of exception should be thrown");
-        }
+        public void BadInterfaceRegistration_RegisterTypeThrowsException() => Test
+            .Arrange(() => new ContainerBuilder())
+            .Act(containerBuilder => containerBuilder.RegisterType<Main1>().As<IMain2>())
+            .Assert().ThrewException<InvalidOperationException>("Bad interface registration should throw an exception");
 
         [TestMethod]
-        public void InterfaceAsInstanceRegistration_RegisterTypeThrowsException()
-        {
-            Exception resultException = null;
-            var containerBuilder = new ContainerBuilder();
-
-            try
-            {
-                containerBuilder.RegisterType<IInternalDependency1>();
-            }
-            catch (Exception ex)
-            {
-                resultException = ex;
-            }
-
-            Assert.IsNotNull(resultException,
-                "Registration should throw an exception");
-
-            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException),
-                "The specified kind of exception should be thrown");
-        }
+        public void InterfaceAsInstanceRegistration_RegisterTypeThrowsException() => Test
+            .Arrange(() => new ContainerBuilder())
+            .Act(containerBuilder => containerBuilder.RegisterType<IInternalDependency1>())
+            .Assert().ThrewException<NotInstantiableTypeException>("Interface as instance registration should throw an exception");
 
         [TestMethod]
-        public void AbstractClassAsInstanceRegistration_RegisterTypeThrowsException()
-        {
-            Exception resultException = null;
-            var containerBuilder = new ContainerBuilder();
-
-            try
-            {
-                containerBuilder.RegisterType<AbstractClass>();
-            }
-            catch (Exception ex)
-            {
-                resultException = ex;
-            }
-
-            Assert.IsNotNull(resultException,
-                "Registration should throw an exception");
-
-            Assert.IsInstanceOfType(resultException, typeof(NotInstantiableTypeException),
-                "The specified kind of exception should be thrown");
-        }
+        public void AbstractClassAsInstanceRegistration_RegisterTypeThrowsException() => Test
+            .Arrange(() => new ContainerBuilder())
+            .Act(containerBuilder => containerBuilder.RegisterType<AbstractClass>())
+            .Assert().ThrewException<NotInstantiableTypeException>("Abstract class as instance registration should throw an exception");
 
         [TestMethod]
-        public void CallingBuildTwice_BuilderThrowsException()
-        {
-            Exception resultException = null;
-            var containerBuilder = new ContainerBuilder();
-
-            try
+        public void CallingBuildTwice_BuilderThrowsException() => Test
+            .Arrange(() => new ContainerBuilder())
+            .Act(containerBuilder =>
             {
                 containerBuilder.RegisterType<InternalDependency1>().AsSelf();
                 containerBuilder.RegisterType<InternalDependency2>().AsSelf();
 
                 containerBuilder.Build();
                 containerBuilder.Build();
-            }
-            catch (Exception ex)
-            {
-                resultException = ex;
-            }
-
-            Assert.IsNotNull(resultException,
-                "Build should throw an exception");
-
-            Assert.IsInstanceOfType(resultException, typeof(InvalidOperationException),
-                "The specified kind of exception should be thrown");
-        }
+            })
+            .Assert().ThrewException<InvalidOperationException>("Calling build twice should throw an exception");
     }
 }
