@@ -18,7 +18,19 @@ jobs:
         dotnet-version: 3.1.301
     - name: Install dependencies
       run: dotnet restore
+    - name: Install tools
+      run: dotnet tool restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Instrument Minicover
+      run: dotnet minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources /DiLite/**/*.cs
+    - name: Reset Minicover hits
+      run: dotnet minicover reset
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-build
+    - name: Uninstrument Minicover
+      run: dotnet minicover uninstrument
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
