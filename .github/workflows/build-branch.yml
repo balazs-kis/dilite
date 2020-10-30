@@ -20,6 +20,10 @@ jobs:
       run: dotnet restore
     - name: Install tools
       run: dotnet tool restore
+    - name: Instrument Minicover
+      run: dotnet minicover instrument --workdir ./ --assemblies /**/bin/**/*.dll --sources /DiLite/**/*.cs
+    - name: Reset Minicover hits
+      run: dotnet minicover reset
     - name: Build
       run: dotnet build --no-restore
     - name: Test
