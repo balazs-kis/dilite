@@ -27,7 +27,7 @@ jobs:
     - name: Reset Minicover hits
       run: dotnet minicover reset
     - name: Test
-      run: dotnet test --no-build
+      run: dotnet test --no-restore --verbosity normal
     - name: Uninstrument Minicover
       run: dotnet minicover uninstrument
     - name: Coveralls
