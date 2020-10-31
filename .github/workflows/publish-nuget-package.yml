@@ -1,0 +1,67 @@
+name: build # This will be presented on the repo badge, so it's kept short and simple.
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  NUGET_XMLDOC_MODE: skip
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dotnet: ["3.1"]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core ${{ matrix.dotnet }} SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --settings coverlet.runsettings
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: "!**/.nuget/packages/**/*.*"
+        flags: ${{ runner.os }},netcore${{ matrix.dotnet }}
+
+
+  publish:
+    name: Build and Publish
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dotnet: ["3.1"]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core ${{ matrix.dotnet }} SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Publish package
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: DiLite/DiLite.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

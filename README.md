@@ -2,9 +2,8 @@
 
 DiLite /dɪˈlʌɪt/ is a minimalist, lightweight DI framework. Registrations and resolutions will look very familiar to those accustomed to Autofac.
 
-[![Build Status](https://travis-ci.com/balazs-kis/dilite.svg?branch=master)](https://travis-ci.com/balazs-kis/dilite)
-[![Coverage Status](https://coveralls.io/repos/github/balazs-kis/dilite/badge.svg?branch=master)](https://coveralls.io/github/balazs-kis/dilite?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/e9ed8962ba108183aa1e/maintainability)](https://codeclimate.com/github/balazs-kis/dilite/maintainability)
+[![Build Status](https://github.com/balazs-kis/dilite/workflows/build/badge.svg "Build Status")](https://github.com/balazs-kis/dilite/actions?query=workflow%3A%22build%22)
+[![Coverage Status](https://codecov.io/gh/balazs-kis/dilite/branch/master/graph/badge.svg)](https://codecov.io/gh/balazs-kis/dilite)
 [![Nuget](https://img.shields.io/nuget/v/di-lite)](https://www.nuget.org/packages/di-lite)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -25,7 +24,7 @@ var myInstance = container.Resolve<IMyClass>();
 ## Features
 
 ### 1. Single instance
-Each resulution call to the container will create a new instance of the registered type, unless it is specified as a singleton during registration. To register a type as a singleton, just use the `AsSingleInstance` method:
+Each resolution call to the container will create a new instance of the registered type, unless it is specified as a singleton during registration. To register a type as a singleton, just use the `AsSingleInstance` method:
 ```csharp
 containerBuilder.RegisterType<MyClass>().As<IMyClass>().AsSingleInstance();
 ```
