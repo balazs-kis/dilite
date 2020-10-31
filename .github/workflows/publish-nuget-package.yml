@@ -41,6 +41,7 @@ jobs:
 
   publish:
     name: Build and Publish
+    needs: [build]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
