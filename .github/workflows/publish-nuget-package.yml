@@ -1,4 +1,4 @@
-name: Publish Nuget Package
+name: build # This will be presented on the repo badge, so it's kept short and simple.
 
 on:
   push:
